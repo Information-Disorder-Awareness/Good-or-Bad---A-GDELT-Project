@@ -1,0 +1,220 @@
+.site-header {
+    background-color: #333 !important;
+    color: #fff !important;
+    padding: 15px !important;
+    text-align: center !important;
+    font-family: Arial, sans-serif !important;
+}
+
+.button_header {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 10px;
+}
+
+.container-fluid {
+    display: flex;
+    flex-direction: row; /* Sidebar a sinistra */
+    align-items: flex-start;
+    gap: 20px; /* Spazio tra sidebar e contenuto principale */
+    padding: 20px;
+}
+
+.sidebar {
+    flex: 0 0 300px; /* Dimensione fissa della sidebar */
+    max-width: 300px;
+    margin-right: 20px; /* Spazio dalla parte centrale */
+    background-color: #f8f9fa !important;
+    border-right: 2px solid #ddd !important;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: auto; /* Adatta l'altezza al contenuto */
+    position: sticky; /* Fissa la sidebar quando scrolli */
+    top: 20px;
+}
+
+.contenuto-principale {
+    flex: 1; /* Occupa tutto lo spazio disponibile */
+    display: flex;
+    align-items: center !important;
+    flex-direction: column; /* Ordine verticale per grafici e lista */
+    gap: 30px; /* Spazio tra le sezioni */
+}
+
+.plot-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.plotly-graph-div {
+    width: 100%; 
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+}
+
+.event-list {
+    width: 100%;
+    max-width: 1000px;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background-color: rgba(245, 245, 245, 0.9);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.event-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.event-list li:hover {
+    background-color: #f0f0f0;
+}
+
+#progress-bar-container {
+    width: 100%;
+    max-width: 1000px;
+    height: 40px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+#bar-tone {
+    height: 100%;
+    background-color: rgba(76, 175, 80, 0.7);
+    transition: width 0.5s ease;
+    margin-right: auto;
+}
+
+#bar-text {
+    position: absolute;
+    font-weight: bold;
+    color: #000;
+}
+
+.btn-good {
+    background-color: rgb(76, 175, 80) !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+}
+
+.btn-good:hover {
+    background-color: #fff !important;
+    color: #4caf50 !important;
+    font-weight: bold !important;
+}
+
+.btn-bad {
+    background-color: rgb(244, 67, 54) !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+}
+
+.btn-bad:hover {
+    background-color: #fff !important;
+    color: rgb(152, 10, 0) !important;
+    font-weight: bold !important;
+}
+
+.btn-home{
+    background-color: rgb(49, 97, 143) !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+}
+
+.btn-home:hover{
+    background-color: #fff !important;
+    color: rgb(49, 97, 143) !important;
+    font-weight: bold !important;
+}
+
+.tab-container {
+    margin-top: 20px;
+}
+
+.tab-container h4 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.tab-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.tab-container th, .tab-container td {
+    padding: 10px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.tab-container th {
+    background-color: #f4f4f4;
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.tab-container td {
+    color: #555;
+    font-size: 0.9rem;
+    vertical-align: top;
+}
+
+.tab-container tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.tab-container tr:hover {
+    background-color: #f1f1f1;
+}
+
+.tab-container a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.tab-container a:hover {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+    .tab-container table {
+        font-size: 0.8rem;
+    }
+
+    .tab-container th, .tab-container td {
+        padding: 8px;
+    }
+}

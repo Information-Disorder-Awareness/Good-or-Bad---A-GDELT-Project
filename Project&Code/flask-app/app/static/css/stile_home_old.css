@@ -1,0 +1,188 @@
+.site-header {
+    background-color: #333 !important;
+    color: #fff !important;
+    padding: 15px !important;
+    text-align: center !important;
+    font-family: Arial, sans-serif !important;
+}
+
+.button_header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+.sidebar {
+    flex: 0 0 300px; /* Dimensione fissa per la barra laterale */
+    max-width: 300px;
+    margin-right: 20px; /* Spazio tra i filtri e i contenuti */
+    background-color: #f8f9fa !important;
+    border-right:2px solid #ddd !important ;
+}
+
+.contenuto-principale {
+    flex: 1; /* Occupa il resto dello spazio disponibile */
+    display: flex;
+    flex-wrap: wrap; /* Permette ai figli di andare a capo se necessario */
+    gap: 20px; /* Spazio tra le colonne */
+}
+
+
+.col-md-6 {
+    flex: 0 0 48%; /* Ogni colonna occupa il 48% della larghezza */
+    max-width: 48%;
+    min-width: 300px; /* Impedisce che diventi troppo stretta */
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.75);
+    min-height: 100vh;
+}
+
+
+
+.plot-container {
+    display: flex;
+    flex: 1 1 auto; /* Allow it to grow and shrink */
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center; /* Align chart content vertically */
+    align-items: center; /* Align chart content horizontally */
+    overflow: hidden;
+}
+
+
+
+.plotly-graph-div {
+    width: 100%;  /* Occupa tutta la larghezza del genitore */
+    height: 600px; /* Altezza fissa o variabile */
+    position: relative; /* Necessario se ci sono elementi assoluti */
+    overflow: hidden; /* Per gestire eventuali elementi che eccedono */
+}
+
+
+.event-list {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 10px 0 0 !important;
+    text-align: left !important;  
+}
+
+.event-list li {
+    padding: 8px 0 !important;
+    border-bottom: 1px solid #ddd !important;
+    font-weight: bold !important;
+    color: #333 !important;
+    font-size: 1.1em !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.event-list li:hover {
+    background-color: #f0f0f0 !important;
+}
+
+.clickable-event {
+    cursor: pointer !important;
+    color: #007bff !important;
+    transition: color 0.3s ease !important;
+}
+
+.clickable-event:hover {
+    color: #0056b3 !important;
+}
+
+.btn-good {
+    background-color: rgb(76, 175, 80) !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+}
+
+.btn-good:hover {
+    background-color: #fff !important;
+    color: #4caf50 !important;
+    font-weight: bold !important;
+}
+
+.btn-bad {
+    background-color: rgb(244, 67, 54) !important;
+    color: #333 !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+}
+
+.btn-bad:hover {
+    background-color: rgb(152, 10, 0) !important;
+    color: #333 !important;
+    font-weight: bold !important;
+}
+
+
+.multiselect-dropdown {
+    width: 100% !important;
+    max-width: 300px !important;
+    background-color: #fff !important;
+    border: 1px solid #ccc !important;
+    border-radius: 5px !important;
+    padding: 5px !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 1em !important;
+    color: #333 !important;
+    cursor: pointer !important;
+}
+
+.multiselect-dropdown option {
+    padding: 5px !important;
+}
+
+.multiselect-dropdown:focus {
+    outline: none !important;
+    border-color: #007bff !important;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5) !important;
+}
+
+#progress-bar-container {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 500px !important;
+    height: 30px !important;
+    background-color: #e0e0e0 !important; /* Sfondo grigio */
+    border-radius: 5px !important;
+    overflow: hidden !important;
+    display: flex !important; /* Layout flessibile */
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 20px auto !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+#bar-tone {
+    height: 100% !important;
+    transition: width 0.5s ease !important;
+    margin-right: auto !important;;
+}
+
+
+#bar-text {
+    position: absolute !important;
+    z-index: 1 !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 14px !important;
+    color: black !important;
+    font-weight: bold !important;
+    text-align: center !important;
+}
+
+.container-fluid {
+    display: flex;
+    flex-wrap: nowrap; /* Impedisce che gli elementi vadano a capo */
+    gap: 20px;
+}
+

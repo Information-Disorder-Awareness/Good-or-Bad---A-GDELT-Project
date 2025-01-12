@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notizie in Voga</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stile_home.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <h1>Notizie in Voga</h1>
+        <div class="button_header">
+        <form action="/GoodVibes" method="get">
+            <button type="submit" class="btn btn-good mt-3">Buone notizie</button>
+        </form>
+        <form action="/BadVibes" method="get">
+            <button type="submit" class="btn btn-bad mt-3">Cattive notizie</button>
+        </form>
+        </div>
+    </header>
+    
+    <div class="container-fluid">
+            <div class="sidebar">
+                <h3>Filtri</h3>
+                
+                <form method="POST">
+                    <div id="root"></div> <!--provo a metterlo nel form...-->
+                    <input type="hidden" id="selectedCodesInput" name="selectedCodes"> <!--Questo dovrebbe riuscire a farmeli leggere da Flask-->
+                    {% if selezionati %}
+                    <div id="event-list-container">
+                        <h3>Eventi Selezionati</h3>
+                        <ul id="event-list">
+                            {% for evento in selezionati %}
+                                <li>{{ evento }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    <label for="start_date">Data di inizio:</label>
+                    <input type="date" id="start_date" name="start_date" class="form-control" value="{{date_start}}" placeholder="{{date_start}}">
+
+                    <label for="end_date" class="mt-2">Data di fine:</label>
+                    <input type="date" id="end_date" name="end_date" class="form-control" value="{{date_end}}" placeholder="{{date_end}}">
+
+                    <label for="country" class="mt-2">Paese:</label>
+                    <select id="country" name="country" class="form-control">
+                        <option value="">Seleziona un paese</option>
+                        {% for paese in lista_paesi %}
+                            {% if paese==country %}
+                                <option value="{{ paese }}" selected>{{ paese }}</option>
+                            {% else %}
+                                <option value="{{ paese }}">{{ paese }}</option>
+                            {%endif%}
+                        {% endfor %}
+                    </select>
+
+                    <button type="submit" class="btn btn-primary mt-3">Ricerca</button>
+                </form>
+            </div>
+    {% if tipo_evento is not none %}
+            <div class="contenuto-principale">                
+                <div id="map-plot-container" class="plot-container">
+                    <h3>Mappa degli Eventi più citati del {{titolo}}</h3>
+                    <div>{{ map_plot|safe }}</div>
+                </div>
+
+                <ul class="event-list">
+                    {% for cameo in tipo_evento.index %}
+                        <li data-cameo="{{ cameo }}" class="clickable-event">{{ cameo }}: {{ tipo_evento.loc[cameo] }} eventi;</li>
+                    {% endfor %}
+                </ul>
+
+                <div id="ist-plot-container" class="plot-container">
+                    <h4>Distribuzione del tono di notizie del {{titolo}}</h4>
+                    <div>{{ ist_plot|safe }}</div>
+                </div>
+                <div id="progress-bar-container">
+                    <div id="bar-tone"></div>
+                    <span id="bar-text"></span>
+                </div>
+            </div>
+    </div>
+    {% else %}
+        <div class="col-md-9 content">  
+            <h1 class="Titolo mt-4">Nessuna notizia trovata per il tipo selezionato.</h1>
+        </div>
+    {% endif %}
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector("form").addEventListener("submit", function(event) {
+        var startDate = document.getElementById("start_date").value;
+        var endDate = document.getElementById("end_date").value;
+
+        if (startDate && endDate && startDate > endDate) {
+            alert("La data di inizio non può essere successiva alla data di fine.");
+            event.preventDefault();
+        }
+    });
+
+    document.querySelectorAll('.clickable-event').forEach(function(element) {
+        element.addEventListener('click', function() {
+            var cameoCode = this.getAttribute('data-cameo');
+            filterGraphByCameo(cameoCode);
+        });
+    });
+
+    function filterGraphByCameo(cameoCode) {
+        var mapPlot = document.getElementById('map-plot-container').querySelector('.plotly-graph-div');
+
+        if (mapPlot) {
+            var data = mapPlot.data;
+
+            
+            var resetData = data.map(trace => {
+                if (trace.x && trace.marker) {
+                    return {
+                        ...trace,
+                        marker: {
+                            ...trace.marker,
+                            opacity: Array(trace.x.length).fill(1) 
+                        }
+                    };
+                }
+                return trace;
+            });
+
+            
+            Plotly.react(mapPlot, resetData, mapPlot.layout).then(() => {
+        var updatedData = resetData.map(trace => {
+        if (trace.customdata && trace.marker) {
+            
+            const matchingPoints = trace.customdata.map(cd => cd[1] === cameoCode);
+            
+            return {
+                ...trace,
+                marker: {
+                    ...trace.marker,
+                    opacity: trace.customdata.map(cd => (cd[1] === cameoCode ? 1 : 0))
+                }
+            };
+        }
+        return trace;
+    });
+    Plotly.react(mapPlot, updatedData, mapPlot.layout);
+});
+
+        }
+    }
+
+    var mapPlot = document.getElementById('map-plot-container').querySelector('.plotly-graph-div');
+    if (mapPlot) {
+        mapPlot.on('plotly_afterplot', function() {
+            mapPlot.on('plotly_click', function(data) {
+                var url = data.points[0].customdata[0]; 
+                if (url) {
+                    window.open(url, "_blank");
+                }
+            });
+        });
+    }
+});
+
+
+    </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("La pagina è completamente caricata");
+        const avgTone = parseFloat("{{tono_medio|default(0)}}");
+        console.log("AvgTone: ", avgTone)
+
+        const barra=document.getElementById("bar-tone");
+        const testo_barra=document.getElementById("bar-text");
+        
+        if (isNaN(avgTone)){
+            console.error("Il valore non è valido:");
+            testo_barra.textContent="Nessun dato";
+            barra.style.width="0%";
+            barra.style.backgroundColor="#ccc";
+            return;
+        }
+
+        const riempimento = Math.min(Math.abs(avgTone)*10,100);
+        console.log("Percentuale di riempimento: ", riempimento);
+        
+        barra.style.width=`${riempimento}%`;
+        if (avgTone < 0){
+            barra.style.backgroundColor="rgba(244, 67, 54, 0.7)";
+        }else {
+            barra.style.backgroundColor="rgba(76, 175, 80, 0.7)";
+        }
+
+        testo_barra.textContent=avgTone.toFixed(2);
+    });
+    </script>
+
+    <script src="{{ url_for('static', filename='js/bundle.js') }}"></script>   
+    
+</body>
+</html>

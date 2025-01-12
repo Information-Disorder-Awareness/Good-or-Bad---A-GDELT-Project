@@ -1,0 +1,17 @@
+FROM apache/spark:latest
+
+USER root
+
+RUN apt-get update && \
+    apt-get install -y python3-pip openjdk-11-jdk-headless && \
+    apt-get clean
+
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV PATH="$JAVA_HOME/bin:${PATH}"
+
+RUN pip3 install pyspark
+COPY connettore.jar /opt/spark/jars/
+COPY mongo-java-driver-3.12.10.jar /opt/spark/jars
+
+WORKDIR /app
+COPY . /app
