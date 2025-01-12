@@ -1,1 +1,5 @@
-
+kafka-python
+gdelt
+pymongo
+pandas
+geopy
